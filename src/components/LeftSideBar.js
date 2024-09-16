@@ -5,7 +5,7 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 
 function LeftSideBar() {
     return (
-        <div>
+        <div className='w-[20%]'>
             <div>
                 <div>
                     <img className='ml-3' width={"40px"} src={twitterLogo} alt="twitter-logo" />
