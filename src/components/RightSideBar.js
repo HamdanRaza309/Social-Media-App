@@ -5,7 +5,7 @@ import profile from '../assets/profile.png';
 
 function RightSideBar() {
     return (
-        <div className='w-[29%] border border-gray-200 rounded-2xl bg-white'>
+        <div className='w-[29%] rounded-2xl bg-white'>
             {/* Search Box */}
             <div className='flex items-center p-2 bg-gray-100 rounded-full mb-6'>
                 <CiSearch size={24} className="text-gray-500" />

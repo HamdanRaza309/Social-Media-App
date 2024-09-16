@@ -37,7 +37,7 @@ function CreatePost() {
                             onChange={(e) => setPostText(e.target.value)}
                         />
                     </div>
-                    <div className='flex items-center justify-between p-4 border-t border-gray-300'>
+                    <div className='flex items-center justify-between p-4 border-t'>
                         <div className='cursor-pointer text-blue-500 hover:bg-blue-50 p-2 rounded-full'>
                             <CiImageOn size="34px" />
                         </div>
