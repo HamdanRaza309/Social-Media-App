@@ -5,7 +5,7 @@ import RightSideBar from "./RightSideBar";
 
 function Home() {
     return (
-        <div>
+        <div className='flex justify-between w-[80%] mx-auto'>
             <LeftSideBar />
             <Feed />
             <RightSideBar />
