@@ -4,6 +4,8 @@ import twitterLogo from '../assets/twitter_logo.png';
 import { USER_API_ENDPOINT } from '../utils/constant';
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { getUser } from "../redux/userSlice";
 
 function Login() {
     const [isLogin, setIsLogin] = useState(true);
@@ -12,6 +14,7 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const loginSignupHandler = () => {
         setIsLogin(!isLogin);
@@ -30,6 +33,7 @@ function Login() {
                     },
                     withCredentials: true
                 })
+                dispatch(getUser(res?.data?.user));
                 if (res.data.success) {
                     navigate('/');
                     toast.success(res.data.message)
