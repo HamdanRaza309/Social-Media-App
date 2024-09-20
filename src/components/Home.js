@@ -3,13 +3,20 @@ import LeftSideBar from "./LeftSideBar";
 import Feed from "./Feed";
 import RightSideBar from "./RightSideBar";
 import { Outlet } from "react-router-dom";
+import useOtherUsers from '../hooks/useOtherUsers';
+import { useSelector } from 'react-redux';
 
 function Home() {
+    // custom hook
+    const { user, otherUsers } = useSelector(store => store.user);
+    useOtherUsers(user?._id);
+
+
     return (
         <div className='flex justify-between w-[80%] mx-auto'>
             <LeftSideBar />
             <Outlet />
-            <RightSideBar />
+            <RightSideBar otherUsers={otherUsers} />
         </div>
     )
 }
