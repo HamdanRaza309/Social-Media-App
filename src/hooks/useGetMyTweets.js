@@ -1,12 +1,14 @@
 import axios from "axios";
 import { TWEET_API_ENDPOINT } from "../utils/constant";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile } from "../redux/userSlice";
 import { getAllTweets } from "../redux/tweetSlice";
 
 const useGetMyTweets = (id) => {
     const dispatch = useDispatch();
+    const { refresh } = useSelector(store => store.tweet);
+
     useEffect(() => {
         const fetchMyTweets = async () => {
             try {
@@ -20,6 +22,6 @@ const useGetMyTweets = (id) => {
             }
         }
         fetchMyTweets();
-    }, [id]);
+    }, [id, refresh]);
 };
 export default useGetMyTweets;
