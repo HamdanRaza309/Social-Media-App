@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import Avatar from "react-avatar";
 import profile from '../assets/profile.png';
@@ -28,12 +29,14 @@ function RightSideBar({ otherUsers = [] }) { // Default to an empty array if und
                                 <Avatar src={profile} size="45" round={true} />
                                 <div>
                                     <h1 className='font-semibold text-sm'>{user?.name}</h1>
-                                    <p className='text-gray-500 text-sm'>{user?.username}</p>
+                                    <p className='text-gray-500 text-sm'>@{user?.username}</p>
                                 </div>
                             </div>
-                            <button className='px-4 py-1 bg-black text-white rounded-full text-sm font-semibold hover:bg-gray-700 transition'>
-                                Profile
-                            </button>
+                            <Link to={`/profile/${user?._id}`}>
+                                <button className='px-4 py-1 bg-black text-white rounded-full text-sm font-semibold hover:bg-gray-700 transition'>
+                                    Profile
+                                </button>
+                            </Link>
                         </div>
                     ))
                 ) : (

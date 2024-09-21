@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import Avatar from "react-avatar";
+import Avatar from 'react-avatar';
 import profile from '../assets/profile.png';
-import { GoComment } from "react-icons/go";
-import { CiHeart, CiBookmark } from "react-icons/ci";
+import { GoComment } from 'react-icons/go';
+import { CiHeart, CiBookmark } from 'react-icons/ci';
 
-function Tweet() {
-    const [likes, setLikes] = useState(0);
-    const [comments, setComments] = useState(0);
-    const [bookmarks, setBookmarks] = useState(0);
-    const [liked, setLiked] = useState(false);
+function Tweet({ tweet }) {
+    const [likes, setLikes] = useState(tweet?.like?.length || 0);
     const [bookmarked, setBookmarked] = useState(false);
+    const [liked, setLiked] = useState(false);
 
     const handleLike = () => {
         setLiked(!liked);
@@ -18,39 +16,37 @@ function Tweet() {
 
     const handleBookmark = () => {
         setBookmarked(!bookmarked);
-        setBookmarks(bookmarked ? bookmarks - 1 : bookmarks + 1);
     };
 
     return (
-        <div className="w-full max-w-2xl mx-auto">
-            {/* First Tweet */}
-            <div className="border-b border-gray-300 mb-4 p-4 hover:bg-gray-50 transition duration-200">
-                <div className="flex items-start gap-4">
-                    <Avatar src={profile} size="40" round={true} />
-                    <div className="w-full">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <h1 className="font-semibold">Arman</h1>
-                                <p className="text-gray-500 text-sm">@khanarman . 1m</p>
-                            </div>
-                            <p className="text-gray-400 text-sm cursor-pointer hover:underline">...</p>
+        <div className="w-full max-w-2xl mx-auto px-4 py-2 bg-white border-b border-gray-200 hover:bg-gray-50 transition-colors duration-200">
+            <div className="flex items-start gap-3">
+                {/* Avatar */}
+                <Avatar src={profile} size="40" round={true} />
+                {/* Tweet Content */}
+                <div className="flex-1">
+                    <div className="flex justify-between">
+                        <div>
+                            <h1 className="font-bold text-gray-900">{tweet?.userDetails[0].name}</h1>
+                            <p className="text-gray-500 text-sm">
+                                @{tweet?.userDetails[0].username} &bull; 1m
+                            </p>
                         </div>
-                        <div className="mt-2">
-                            <p>Asalam O Alaikom, let's connect and achieve our goals.</p>
+                        <div className="text-gray-500 hover:text-gray-700 cursor-pointer">...</div>
+                    </div>
+                    <p className="mt-2 text-gray-800">{tweet?.description}</p>
+                    <div className="flex items-center justify-between mt-3 text-gray-500 text-sm">
+                        <div className="flex items-center gap-1 cursor-pointer hover:text-red-500" onClick={handleLike}>
+                            <CiHeart size="20px" className={liked ? 'text-red-500' : ''} />
+                            <p>{tweet?.like?.length}</p>
                         </div>
-                        <div className="flex items-center justify-start gap-6 mt-3 text-gray-500">
-                            <div className="flex items-center gap-1 cursor-pointer hover:text-red-500" onClick={handleLike}>
-                                <CiHeart size="24px" className={liked ? "text-red-500" : ""} />
-                                <p>{likes}</p>
-                            </div>
-                            <div className="flex items-center gap-1 cursor-pointer hover:text-blue-500">
-                                <GoComment size="20px" />
-                                <p>{comments}</p>
-                            </div>
-                            <div className="flex items-center gap-1 cursor-pointer hover:text-yellow-500" onClick={handleBookmark}>
-                                <CiBookmark size="24px" className={bookmarked ? "text-yellow-500" : ""} />
-                                <p>{bookmarks}</p>
-                            </div>
+                        <div className="flex items-center gap-1 cursor-pointer hover:text-blue-500">
+                            <GoComment size="18px" />
+                            <p>{tweet?.comments?.length || 0}</p>
+                        </div>
+                        <div className="flex items-center gap-1 cursor-pointer hover:text-yellow-500" onClick={handleBookmark}>
+                            <CiBookmark size="20px" className={bookmarked ? 'text-yellow-500' : ''} />
+                            <p>{tweet?.userDetails[0].bookmarks?.length}</p>
                         </div>
                     </div>
                 </div>
