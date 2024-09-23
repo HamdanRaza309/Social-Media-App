@@ -2,12 +2,34 @@ import React from 'react';
 import twitterLogo from '../assets/twitter_logo.png';
 import { CiHome, CiHashtag, CiUser, CiBookmark, CiLogout } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from "axios";
+import { USER_API_ENDPOINT } from '../utils/constant';
+import toast from 'react-hot-toast';
+import { getMyProfile, getOtherUsers, getUser } from '../redux/userSlice';
 
 function LeftSideBar() {
     const { user } = useSelector(store => store.user);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
+    const handleLogout = async () => {
+        try {
+            const res = await axios.get(`${USER_API_ENDPOINT}/logout`, { withCredentials: true });
+            if (res.data.success) {
+                toast.success(res.data.message)
+                dispatch(getUser(null));
+                dispatch(getOtherUsers(null));
+                dispatch(getMyProfile(null));
+                navigate('/login');
+            }
+        } catch (error) {
+            console.log('Something went wrong during Logout.');
+            toast.error(error.response.data.message);
+            navigate('/');
+        }
+    }
     return (
         <div className='w-[20%]'>
             <div>
@@ -21,13 +43,13 @@ function LeftSideBar() {
                         </div>
                         <h1 className='font-semibold text-lg ml-2'>Home</h1>
                     </Link>
-                    <Link to='/explore' className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 rounded-full hover:cursor-pointer'>
+                    <Link className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 rounded-full hover:cursor-pointer'>
                         <div>
                             <CiHashtag size="24px" />
                         </div>
                         <h1 className='font-semibold text-lg ml-2'>Explore</h1>
                     </Link>
-                    <Link to='/notifications' className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 rounded-full hover:cursor-pointer'>
+                    <Link className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 rounded-full hover:cursor-pointer'>
                         <div>
                             <IoIosNotificationsOutline size="24px" />
                         </div>
@@ -45,13 +67,13 @@ function LeftSideBar() {
                             <p className='text-center text-gray-500'>Loading profile...</p>
                         )
                     }
-                    <Link to='/bookmarks' className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 rounded-full hover:cursor-pointer'>
+                    <Link className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 rounded-full hover:cursor-pointer'>
                         <div>
                             <CiBookmark size="24px" />
                         </div>
                         <h1 className='font-semibold text-lg ml-2'>Bookmarks</h1>
                     </Link>
-                    <Link to='/logout' className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 rounded-full hover:cursor-pointer'>
+                    <Link onClick={handleLogout} className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 rounded-full hover:cursor-pointer'>
                         <div>
                             <CiLogout size="24px" />
                         </div>
