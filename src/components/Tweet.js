@@ -31,6 +31,7 @@ const Tweet = ({ tweet }) => {
                 setLikes(prev => liked ? prev - 1 : prev + 1);
             }
         } catch (error) {
+            console.log("Something went wrong while Liking or Disliking tweet.");
             toast.error(error?.response?.data?.message || "Something went wrong");
         }
     };
@@ -44,6 +45,7 @@ const Tweet = ({ tweet }) => {
                 toast.success(res.data.message);
             }
         } catch (error) {
+            console.log("Something went wrong while deleting tweet.");
             toast.error(error?.response?.data?.message || "Something went wrong");
         }
     };
